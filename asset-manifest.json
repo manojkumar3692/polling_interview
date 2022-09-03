@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/polling_interview/static/css/main.62c9c57c.css",
+    "main.js": "/polling_interview/static/js/main.5024b09b.js",
+    "static/js/787.204f0893.chunk.js": "/polling_interview/static/js/787.204f0893.chunk.js",
+    "index.html": "/polling_interview/index.html",
+    "main.62c9c57c.css.map": "/polling_interview/static/css/main.62c9c57c.css.map",
+    "main.5024b09b.js.map": "/polling_interview/static/js/main.5024b09b.js.map",
+    "787.204f0893.chunk.js.map": "/polling_interview/static/js/787.204f0893.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.62c9c57c.css",
+    "static/js/main.5024b09b.js"
+  ]
+}
