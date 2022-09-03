@@ -1,6 +1,24 @@
-# Getting Started with Create React App
+# Polling Application using ( React , API Context, useReducer Hook)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Features
+
+* To create Multiple voting polls with ( Title , Expiry Date, Option)
+* Max 5 and Min 2 Option has to be provided 
+* Delete Created Voting Poll
+
+* Poll Page which list all the created voting poll
+* Indicator to say policy active or expired
+* Select Poll and caste Vote ( Only one entry allowed )
+* View Result Option with count
+
+### nvm version 16.13 used in this project
+
+### To run this project
+
+* Yarn 
+* yarn start
+* runs on http://localhost:3000
+
 
 ## Available Scripts
 
