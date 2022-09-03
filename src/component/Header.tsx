@@ -9,7 +9,9 @@ export default function Header({}: Props) {
   
   <HeaderContainer>
     <HeaderLogo>
+        <Link to="/">
             <img src="https://sabbar.com/wp-content/themes/sabbar-website-2/assets/images/logo-ar.svg" />
+        </Link>
     </HeaderLogo>
     <HeaderLogo>
             <ul>
