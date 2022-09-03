@@ -15,7 +15,7 @@ import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import { PollState } from "../context/context";
 import { Outlet, Link } from "react-router-dom";
-import { format, subDays } from 'date-fns';
+import { format, subDays } from "date-fns";
 
 type Props = {};
 
@@ -34,11 +34,6 @@ export default function Polls({}: Props) {
     adminDispatch,
   }: any = PollState();
 
-  // To random each you reach this map 
-//   const randomPolls:any = polls.map((value:any) => ({ value, sort: Math.random() }))
-//   .sort((a:any, b:any) => a.sort - b.sort)
-//   .map(({ value }:any) => value)
-  
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [selectedOption, setSelectedOption] = useState(-1);
   const todayDate = new Date();
@@ -66,8 +61,7 @@ export default function Polls({}: Props) {
   };
 
   return (
-    <Box
-    >
+    <Box>
       <Grid container>
         <Grid item xs={6}>
           <Stack>
@@ -82,7 +76,14 @@ export default function Polls({}: Props) {
                     </Grid>
                     <Grid>
                       <Typography variant="subtitle2">
-                        { poll.endDate < subDays(todayDate, 1) ? <span style={{color: 'red'}}>Poll Expired</span> : <span style={{color:"green"}}>This poll expires on {format(poll.endDate,'dd-MM-yyyy')}</span>} 
+                        {poll.endDate < subDays(todayDate, 1) ? (
+                          <span style={{ color: "red" }}>Poll Expired</span>
+                        ) : (
+                          <span style={{ color: "green" }}>
+                            This poll expires on{" "}
+                            {format(poll.endDate, "dd-MM-yyyy")}
+                          </span>
+                        )}
                       </Typography>
                     </Grid>
                     {index === selectedIndex && (
@@ -109,7 +110,8 @@ export default function Polls({}: Props) {
                           </RadioGroup>
                         </FormControl>
                         <Grid textAlign="right">
-                          {poll.isSubmit && poll.isSubmit || poll.endDate < subDays(todayDate, 1) ? (
+                          {(poll.isSubmit && poll.isSubmit) ||
+                          poll.endDate < subDays(todayDate, 1) ? (
                             <Link to={`${poll.id}`}>
                               <Button variant="outlined" color="primary">
                                 View Result

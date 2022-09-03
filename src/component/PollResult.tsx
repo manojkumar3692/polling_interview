@@ -4,6 +4,7 @@ import { PollState } from "../context/context";
 import { styled } from "@mui/material/styles";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import { IOptionPros, IPollProps } from "../pages/Home";
 
 type Props = {};
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -24,15 +25,15 @@ export default function PollResult(props: Props) {
 
   const params = useParams();
   const chartData = polls
-    .filter((each: any) => each.id === Number(params.id))
-    .map((poll: any) => poll.options);
+    .filter((each: IPollProps) => each.id === Number(params.id))
+    .map((poll: IPollProps) => poll.options);
 
   const data = {
-    labels: chartData[0].map((each: any) => each.value),
+    labels: chartData[0].map((each: IOptionPros) => each.value),
     datasets: [
       {
         label: "# of Votes",
-        data: chartData[0].map((each: any) => each.count),
+        data: chartData[0].map((each: IOptionPros) => each.count),
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
           "rgba(54, 162, 235, 0.2)",
@@ -56,10 +57,10 @@ export default function PollResult(props: Props) {
   return (
     <div>
       {polls
-        .filter((each: any) => each.id === Number(params.id))
-        .map((poll: any) => {
+        .filter((each: IPollProps) => each.id === Number(params.id))
+        .map((poll: IPollProps, index: number) => {
           return (
-            <Box>
+            <Box key={index}>
               <Grid>
                 <Grid sx={{ m: 1 }}>
                   <Item>

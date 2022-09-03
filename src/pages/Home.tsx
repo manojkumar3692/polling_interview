@@ -1,20 +1,27 @@
 import { useState } from "react";
-import {
-  Button,
-  Grid,
-  Box,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Grid, Box, Paper, TextField, Typography } from "@mui/material";
 import { PollState } from "../context/context";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { format, subDays } from 'date-fns';
+import { format, subDays } from "date-fns";
 
 type Props = {};
+
+export interface IOptionPros {
+  key: number;
+  value: string;
+  count: number;
+}
+
+export interface IPollProps {
+  id: number;
+  name: string;
+  options: IOptionPros;
+  isSubmit: boolean;
+  endDate: Date;
+}
 
 const DEFAULT_POLL_OPTION = [
   {
@@ -30,7 +37,6 @@ export default function Home({}: Props) {
     adminDispatch,
   }: any = PollState();
 
-
   const [isCreatePoll, setCreatePoll] = useState(false);
   const [pollTitle, setPollTitle] = useState("");
   const [pollOptions, setPollOptions] = useState(DEFAULT_POLL_OPTION);
@@ -41,10 +47,13 @@ export default function Home({}: Props) {
   const handleChange = (newValue: Date | null) => {
     setValue(newValue);
   };
-  const optionOnChange = (e: any, option: any) => {
+  const optionOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    option: IOptionPros
+  ) => {
     const { value } = e.target;
     setPollOptions((prevState): any => {
-      let newOptions = prevState.map((each: any) => {
+      let newOptions = prevState.map((each: IOptionPros) => {
         if (each.key === option.key) {
           option.value = value;
           return option;
@@ -73,7 +82,7 @@ export default function Home({}: Props) {
       endDate: endDate,
       isSubmit: false,
     };
-    if (obj.options.some((opt: any) => opt.value.length <= 1)) {
+    if (obj.options.some((opt: IOptionPros) => opt.value.length <= 1)) {
       setErrorMessage("Please add minimum 2 option");
       return;
     }
@@ -94,7 +103,7 @@ export default function Home({}: Props) {
             onClick={() => setCreatePoll((prevState) => !prevState)}
           >
             {" "}
-            { isCreatePoll ? "Close" : "Create Poll"}
+            {isCreatePoll ? "Close" : "Create Poll"}
           </Button>
         </Grid>
       </Grid>
@@ -132,7 +141,7 @@ export default function Home({}: Props) {
           </Grid>
 
           <Grid>
-            {pollOptions.map((option: any, index: any) => {
+            {pollOptions.map((option: IOptionPros, index: number) => {
               return (
                 <TextField
                   style={{ width: "98%" }}
@@ -140,7 +149,9 @@ export default function Home({}: Props) {
                   key={index}
                   value={option.value}
                   name="polloption"
-                  onChange={(e) => optionOnChange(e, option)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    optionOnChange(e, option)
+                  }
                   id="outlined-basic"
                   label={`Enter Option ${index + 1}`}
                   variant="outlined"
@@ -181,15 +192,22 @@ export default function Home({}: Props) {
 
       <Grid container spacing={2} textAlign="left">
         <Grid item xs={12} sx={{ m: 1 }}>
-          {polls.map((poll: any, index: number) => {
+          {polls.map((poll: IPollProps, index: number) => {
             return (
               <Paper sx={{ p: 1 }} key={index} elevation={3} square>
                 <Grid container style={{ alignItems: "center" }}>
                   <Grid xs={6}>
                     <Typography>{poll.name}</Typography>
                     <Typography variant="subtitle2">
-                        { poll.endDate < subDays(todayDate, 1) ? <span style={{color: 'red'}}>Poll Expired</span> : <span style={{color:"green"}}>This poll expires on {format(poll.endDate,'dd-MM-yyyy')}</span>} 
-                      </Typography>
+                      {poll.endDate < subDays(todayDate, 1) ? (
+                        <span style={{ color: "red" }}>Poll Expired</span>
+                      ) : (
+                        <span style={{ color: "green" }}>
+                          This poll expires on{" "}
+                          {format(poll.endDate, "dd-MM-yyyy")}
+                        </span>
+                      )}
+                    </Typography>
                   </Grid>
                   <Grid xs={6} textAlign="right">
                     <Button
