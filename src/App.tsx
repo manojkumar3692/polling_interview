@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./component/Header";
 import Home from "./pages/Home";
 import Polls from "./pages/Polls";
@@ -17,6 +17,7 @@ function App() {
           <Route path="/polls" element={<Polls />}>
             <Route path=":id" element={<PollResult />} />
           </Route>
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </div>
